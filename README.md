@@ -16,14 +16,13 @@ $ wordle
   - [x] error check lmao
   - [x] capitalization issues
   - [x] valid words only
+- [ ] commands
+  - [ ] exit
+  - [ ] show previous guesses
 - [ ] hard mode
 - [ ] copy/paste
   - [x] add emoji
   - [ ] copy directly to clipboard
-- [ ] tui implementation
-  - [ ] keep input line in one place
-  - [ ] mimic actual wordle layout
-  - [ ] minor animations
 - [ ] scoreboard
   - [ ] local storage, preferably in `~/.local/state` for unix. windows tbd
   - [ ] streaks
