@@ -1,7 +1,11 @@
-# Build
+# Wordle CLI
+
+Built in 100% rust. Uses the same answers as the official website
+
+## Build
 `$ cargo build --release`. simple as.
 
-# TODO
+## TODO
 - [ ] actually verify answers
   - [ ] hard mode
   - [ ] error check lmao
