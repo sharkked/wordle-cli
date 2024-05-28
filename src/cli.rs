@@ -1,6 +1,5 @@
 use crate::game::{CharState, Game};
 use std::io::{self, Write};
-use thousands::Separable;
 
 fn pretty_string(guess: Vec<CharState>, box_char: char, show_text: bool) -> String {
     let mut guess_text = String::new();
@@ -37,21 +36,21 @@ fn pretty_string(guess: Vec<CharState>, box_char: char, show_text: bool) -> Stri
 }
 
 pub fn run(mut game: Game) -> Result<(), Box<dyn std::error::Error + Send + Sync>> {
-    let title = match game.id {
-        Some(id) => format!("Wordle {}", id.separate_with_commas()),
-        None => String::from("Wordle"),
-    };
-
-    println!("{}", title);
+    println!("{}", &game.title);
 
     let mut input = String::new();
 
     while game.result.is_none() {
+        print!("[{}/6] ", game.guesses.len() + 1);
+        let _ = io::stdout().flush();
+
         input.clear();
         io::stdin().read_line(&mut input).unwrap();
+        let guess = input.trim().to_uppercase();
 
-        let _ = io::stdout().flush();
-        let guess = input.trim().into();
+        if !guess.bytes().all(|b| matches!(b, b'A'..=b'Z')) {
+            continue;
+        }
 
         if let Some(result) = game.check_guess(guess) {
             println!("{}", pretty_string(result, '■', true));
@@ -60,15 +59,7 @@ pub fn run(mut game: Game) -> Result<(), Box<dyn std::error::Error + Send + Sync
 
     println!("\n======");
 
-    match game.result {
-        Some(-1) => println!("{} X/6", title),
-        Some(n) => println!("{} {}/6", title, n),
-        _ => return Ok(()),
-    }
-
-    for guess in game.guesses {
-        println!("{}", pretty_string(guess, '■', false));
-    }
+    println!("{}", game.fmt_share());
 
     Ok(())
 }

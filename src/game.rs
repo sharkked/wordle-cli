@@ -1,5 +1,6 @@
 use chrono;
 use serde::Deserialize;
+use thousands::Separable;
 
 #[derive(Deserialize)]
 pub struct WordleJson {
@@ -29,6 +30,7 @@ pub enum CharState {
 
 pub struct Game {
     pub id: Option<i32>,
+    pub title: String,
     pub solution: String,
     pub guesses: Vec<Vec<CharState>>,
     pub guessed_chars: [CharState; 26],
@@ -43,10 +45,11 @@ fn char_to_idx(c: char) -> usize {
 impl Game {
     pub async fn new() -> Result<Self, reqwest::Error> {
         let puzzle = WordleJson::fetch().await?;
-        let solution = puzzle.solution;
+        let solution = puzzle.solution.to_uppercase();
 
         Ok(Game {
             id: Some(puzzle.days_since_launch),
+            title: format!("Wordle {}", puzzle.days_since_launch.separate_with_commas()),
             solution,
             guesses: vec![],
             guessed_chars: [CharState::Default; 26],
@@ -96,5 +99,28 @@ impl Game {
 
         self.guesses.push(guess_state.clone());
         Some(guess_state)
+    }
+
+    pub fn fmt_share(&self) -> String {
+        let mut out_str = String::new();
+
+        match self.result {
+            Some(-1) => out_str.push_str(&format!("{} X/6\n", self.title)),
+            Some(n) => out_str.push_str(&format!("{} {}/6\n", self.title, n)),
+            _ => return String::new(),
+        }
+
+        for guess in &self.guesses {
+            for c in guess {
+                out_str.push(match c {
+                    CharState::Correct(_) => '🟩',
+                    CharState::WrongPlace(_) => '🟨',
+                    CharState::Absent(_) => '⬛',
+                    CharState::Default => continue,
+                });
+            }
+            out_str.push('\n');
+        }
+        out_str.trim().into()
     }
 }

@@ -9,10 +9,10 @@ it's really not that hard.
 ## todo
 - [ ] actually verify answers
   - [ ] hard mode
-  - [ ] error check lmao
-  - [ ] capitalization issues
+  - [x] error check lmao
+  - [x] capitalization issues
 - [ ] copy/paste
-  - [ ] add emoji
+  - [x] add emoji
   - [ ] copy directly to clipboard
 - [ ] tui implementation
   - [ ] keep input line in one place
