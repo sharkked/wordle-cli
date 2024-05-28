@@ -5,8 +5,10 @@ built in 100% rust, uses the same answers as the official website
 ## how to build
 it's really not that hard. u will need rust installed. if you don't, [it's really easy.](https://www.rust-lang.org/tools/install)
 ```sh
+$ git clone https://github.com/sharkked/wordle-cli.git
+$ cd wordle-cli.git
 $ cargo build --release
-$ cargo install
+$ cargo install --path .
 $ wordle
 ```
 
