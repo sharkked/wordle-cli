@@ -1,7 +1,7 @@
-use wordle::{Application, Game};
+use wordle::{Application, Game, Result};
 
 #[tokio::main]
-async fn main() -> Result<(), Box<dyn std::error::Error + Send + Sync>> {
+async fn main() -> Result<()> {
     let game = Game::new().await?;
 
     Application::init(game).await?.run()?;

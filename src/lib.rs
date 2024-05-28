@@ -6,18 +6,20 @@ pub use game::Game;
 use std::io::{self, Write};
 use storage::Cache;
 
+pub type Result<T> = std::result::Result<T, Box<dyn std::error::Error + Send + Sync>>;
+
 pub struct Application {
     game: Game,
     cache: storage::Cache,
 }
 
 impl Application {
-    pub async fn init(game: Game) -> Result<Self, Box<dyn std::error::Error + Send + Sync>> {
+    pub async fn init(game: Game) -> Result<Self> {
         let cache = Cache::init().await?;
         Ok(Self { game, cache })
     }
 
-    pub fn run(&mut self) -> Result<(), Box<dyn std::error::Error + Send + Sync>> {
+    pub fn run(&mut self) -> Result<()> {
         println!("{}", &self.game.title);
 
         let mut input = String::new();
