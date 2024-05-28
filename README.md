@@ -1,11 +1,12 @@
-# Wordle CLI
+# wordle-cli
 
-Built in 100% rust. Uses the same answers as the official website
+built in 100% rust, uses the same answers as the official website
 
-## Build
-`$ cargo build --release`. simple as.
+## how to build
+it's really not that hard.
+`$ cargo build --release`
 
-## TODO
+## todo
 - [ ] actually verify answers
   - [ ] hard mode
   - [ ] error check lmao
@@ -17,3 +18,7 @@ Built in 100% rust. Uses the same answers as the official website
   - [ ] keep input line in one place
   - [ ] mimic actual wordle layout
   - [ ] minor animations
+- [ ] scoreboard
+  - [ ] local storage, preferably in `~/.local/state` for unix. windows tbd
+  - [ ] streaks
+  - [ ] maybe sync w/ website?
