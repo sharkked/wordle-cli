@@ -7,10 +7,11 @@ it's really not that hard.
 `$ cargo build --release`
 
 ## todo
-- [ ] actually verify answers
-  - [ ] hard mode
+- [x] actually verify answers
   - [x] error check lmao
   - [x] capitalization issues
+  - [x] valid words only
+- [ ] hard mode
 - [ ] copy/paste
   - [x] add emoji
   - [ ] copy directly to clipboard

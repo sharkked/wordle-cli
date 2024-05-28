@@ -1,3 +1,4 @@
+use crate::storage::Cache;
 use chrono;
 use serde::Deserialize;
 use thousands::Separable;
@@ -58,15 +59,26 @@ impl Game {
         })
     }
 
-    pub fn check_guess(&mut self, guess: String) -> Option<Vec<CharState>> {
+    pub fn check_guess(&mut self, guess: &String, cache: &Cache) -> Option<Vec<CharState>> {
         if !self.result.is_none() || self.guesses.len() >= 6 {
             return None;
         }
 
-        // validate guess
-        if guess.len() != 5 {
+        let guess = guess.trim().to_uppercase();
+
+        if guess.len() != 5 || !guess.bytes().all(|b| matches!(b, b'A'..=b'Z')) {
             return None;
         }
+        // validate guess
+
+        match cache.find_word(&guess) {
+            Ok(found) => {
+                if !found {
+                    return None;
+                }
+            }
+            Err(_) => return None,
+        };
 
         if guess == self.solution {
             self.result = Some(self.guesses.len() as i32 + 1)
