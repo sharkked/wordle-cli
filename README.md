@@ -2,12 +2,11 @@
 
 built in 100% rust, uses the same answers as the official website
 
-## how to build
+## how to install
 it's really not that hard. u will need rust installed. if you don't, [it's really easy.](https://www.rust-lang.org/tools/install)
 ```sh
 $ git clone https://github.com/sharkked/wordle-cli.git
 $ cd wordle-cli
-$ cargo build --release
 $ cargo install --path .
 $ wordle
 ```
